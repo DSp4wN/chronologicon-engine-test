@@ -49,10 +49,10 @@ describe('isValidISODate', () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// parseLine — Valid Lines
+// parseLine - Valid Lines
 // ─────────────────────────────────────────────────────────────────────────────
 
-describe('parseLine — valid lines', () => {
+describe('parseLine - valid lines', () => {
   test('parses a well-formed line with all fields', () => {
     const line =
       'a1b2c3d4-e5f6-7890-1234-567890abcdef|Founding of ArchaeoData|2023-01-01T10:00:00Z|2023-01-01T11:30:00Z|NULL|Initial establishment of the company.';
@@ -99,10 +99,10 @@ describe('parseLine — valid lines', () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// parseLine — Empty / Blank Lines
+// parseLine - Empty / Blank Lines
 // ─────────────────────────────────────────────────────────────────────────────
 
-describe('parseLine — blank lines', () => {
+describe('parseLine - blank lines', () => {
   test('returns null event and no error for empty string', () => {
     const { event, error } = parseLine('', 1);
     expect(event).toBeNull();
@@ -117,10 +117,10 @@ describe('parseLine — blank lines', () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// parseLine — Malformed Lines
+// parseLine - Malformed Lines
 // ─────────────────────────────────────────────────────────────────────────────
 
-describe('parseLine — malformed lines', () => {
+describe('parseLine - malformed lines', () => {
   test('rejects line with too few fields (missing description)', () => {
     const line = 'aabbccdd-eeff-0011-2233-445566778899|Missing Fields Event|2023-01-04T10:00:00Z';
     const { event, error } = parseLine(line, 22);

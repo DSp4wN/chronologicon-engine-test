@@ -1,6 +1,6 @@
 # Chronologicon Engine
 
-**ArchaeoData Inc. — Unearthing History, Reconstructing Timelines**
+**ArchaeoData Inc. - Unearthing History, Reconstructing Timelines**
 
 A robust Node.js backend service for ingesting, managing, and querying historical event data to reconstruct and analyze complete timelines. Includes the **Temporal Gap Finder** and **Event Influence Spreader** insight engines.
 
@@ -32,7 +32,7 @@ A robust Node.js backend service for ingesting, managing, and querying historica
 
 | Component | Choice | Reasoning |
 |-----------|--------|-----------|
-| **Runtime** | Node.js | Event-driven, non-blocking I/O — ideal for async file ingestion and concurrent API requests |
+| **Runtime** | Node.js | Event-driven, non-blocking I/O - ideal for async file ingestion and concurrent API requests |
 | **Framework** | Express.js | Battle-tested, minimal, largest middleware ecosystem |
 | **Database** | PostgreSQL | Native JSONB, TIMESTAMPTZ, recursive CTEs, generated columns, trigram indexes |
 | **Query Builder** | Knex.js | SQL-level control for recursive CTEs and self-joins; migrations, connection pooling, parameterized queries |
@@ -116,7 +116,7 @@ curl http://localhost:3000/health
 
 **Initiates async file ingestion.** Returns a job ID for status tracking.
 
-**Option A — JSON body with server file path:**
+**Option A - JSON body with server file path:**
 
 ```bash
 curl -X POST http://localhost:3000/api/events/ingest \
@@ -124,7 +124,7 @@ curl -X POST http://localhost:3000/api/events/ingest \
   -d '{"filePath": "./data/sample_historical_data.txt"}'
 ```
 
-**Option B — File upload (multipart/form-data):**
+**Option B - File upload (multipart/form-data):**
 
 ```bash
 curl -X POST http://localhost:3000/api/events/ingest \
@@ -210,9 +210,9 @@ curl http://localhost:3000/api/timeline/a1b2c3d4-e5f6-7890-1234-567890abcdef
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
-| `name` | string | — | Partial match (case-insensitive) |
-| `start_date_after` | ISO 8601 | — | Events starting after this date |
-| `end_date_before` | ISO 8601 | — | Events ending before this date |
+| `name` | string | - | Partial match (case-insensitive) |
+| `start_date_after` | ISO 8601 | - | Events starting after this date |
+| `end_date_before` | ISO 8601 | - | Events ending before this date |
 | `sortBy` | string | `start_date` | `start_date`, `end_date`, `event_name`, `duration_minutes` |
 | `sortOrder` | string | `asc` | `asc` or `desc` |
 | `page` | number | 1 | Page number |
@@ -286,7 +286,7 @@ curl "http://localhost:3000/api/insights/overlapping-events?startDate=2023-01-01
 curl "http://localhost:3000/api/insights/temporal-gaps?startDate=2023-01-01T00:00:00Z&endDate=2023-01-20T00:00:00Z"
 ```
 
-**Response (200 OK — gap found):**
+**Response (200 OK - gap found):**
 
 ```json
 {
@@ -319,7 +319,7 @@ curl "http://localhost:3000/api/insights/temporal-gaps?startDate=2023-01-01T00:0
 curl "http://localhost:3000/api/insights/event-influence?sourceEventId=d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a&targetEventId=c6d7e8f9-a0b1-c2d3-e4f5-a6b7c8d9e0f1"
 ```
 
-**Response (200 OK — path found):**
+**Response (200 OK - path found):**
 
 ```json
 {
@@ -336,7 +336,7 @@ curl "http://localhost:3000/api/insights/event-influence?sourceEventId=d1e2f3a4-
 }
 ```
 
-**Response (200 OK — no path):**
+**Response (200 OK - no path):**
 
 ```json
 {
@@ -372,26 +372,26 @@ This enables unit testing services independently, swapping database layer withou
 
 ### Database: PostgreSQL with Knex.js
 
-- **`GENERATED ALWAYS AS ... STORED`** for `duration_minutes` — guarantees consistency with `start_date`/`end_date`, computed once on write, O(1) reads
-- **`TIMESTAMPTZ`** — timezone-aware timestamps stored in UTC
-- **`JSONB`** over JSON — binary storage enables GIN indexing and efficient querying
-- **`ON DELETE SET NULL`** for parent FK — prevents cascading deletes from wiping history branches
-- **`CHECK (end_date >= start_date)`** — database-level defense against invalid data
-- **Trigram GIN index** on `event_name` — enables fast `ILIKE '%term%'` searches without sequential scans
+- **`GENERATED ALWAYS AS ... STORED`** for `duration_minutes` - guarantees consistency with `start_date`/`end_date`, computed once on write, O(1) reads
+- **`TIMESTAMPTZ`** - timezone-aware timestamps stored in UTC
+- **`JSONB`** over JSON - binary storage enables GIN indexing and efficient querying
+- **`ON DELETE SET NULL`** for parent FK - prevents cascading deletes from wiping history branches
+- **`CHECK (end_date >= start_date)`** - database-level defense against invalid data
+- **Trigram GIN index** on `event_name` - enables fast `ILIKE '%term%'` searches without sequential scans
 
 ### File Ingestion: Stream-Based with Batch Inserts
 
 - `readline` + `createReadStream` processes files line-by-line in **constant O(1) memory**
 - Batch inserts (500 rows/transaction) reduce DB round trips by ~100x vs individual inserts
-- Async processing (HTTP 202) — client doesn't block waiting for large file processing
+- Async processing (HTTP 202) - client doesn't block waiting for large file processing
 - In-memory job store tracks progress; in production, would use Redis/Bull for persistence
 
 ### Algorithms
 
-- **Timeline (Recursive CTE)** — single SQL query for tree traversal, O(n) tree construction in app code
-- **Overlapping Events (Self-Join)** — `a.event_id < b.event_id` ensures distinct pairs; overlap = `LEAST(end) - GREATEST(start)`
-- **Temporal Gaps (Sweep Line)** — O(n log n) sort + O(n) scan; tracks coverage frontier
-- **Event Influence (Dijkstra)** — weighted shortest path with binary min-heap priority queue; bidirectional parent↔child edges
+- **Timeline (Recursive CTE)** - single SQL query for tree traversal, O(n) tree construction in app code
+- **Overlapping Events (Self-Join)** - `a.event_id < b.event_id` ensures distinct pairs; overlap = `LEAST(end) - GREATEST(start)`
+- **Temporal Gaps (Sweep Line)** - O(n log n) sort + O(n) scan; tracks coverage frontier
+- **Event Influence (Dijkstra)** - weighted shortest path with binary min-heap priority queue; bidirectional parent↔child edges
 
 ### Security
 

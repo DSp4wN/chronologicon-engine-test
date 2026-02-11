@@ -1,7 +1,7 @@
 {
   "name": "chronologicon-engine",
   "version": "1.0.0",
-  "description": "Chronologicon Engine — Historical event timeline reconstruction service by ArchaeoData Inc.",
+  "description": "Chronologicon Engine - Historical event timeline reconstruction service by ArchaeoData Inc.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -39,7 +39,7 @@ async function ingest(req, res, next) {
     const job = createJob();
     logger.info(`Ingestion job ${job.jobId} created for file: ${filePath}`);
 
-    // Fire and forget — process in background
+    // Fire and forget - process in background
     ingestionService.processFile(filePath, job.jobId);
 
     return res.status(202).json({

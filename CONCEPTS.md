@@ -1,4 +1,4 @@
-# Conceptual Knowledge & Formulas — Chronologicon Engine
+# Conceptual Knowledge & Formulas - Chronologicon Engine
 
 A deep dive into every concept, algorithm, data structure, and formula used to solve the Chronologicon Engine problem.
 
@@ -61,8 +61,8 @@ Stored: 2023-01-01T04:30:00.000000 UTC
 ```
 
 **Why TIMESTAMPTZ over TIMESTAMP?**
-- `TIMESTAMP` stores literal time — no timezone awareness; breaks with global data.
-- `TIMESTAMPTZ` normalizes to UTC — always comparable, always correct.
+- `TIMESTAMP` stores literal time - no timezone awareness; breaks with global data.
+- `TIMESTAMPTZ` normalizes to UTC - always comparable, always correct.
 
 ### 1.3 Generated Column (duration_minutes)
 
@@ -138,7 +138,7 @@ Used for `metadata` to store flexible, unstructured data (source file, line numb
 
 ### 1.6 Indexing Strategy
 
-**B-Tree Indexes** (default) — for equality and range queries:
+**B-Tree Indexes** (default) - for equality and range queries:
 
 ```sql
 CREATE INDEX idx_events_start_date ON historical_events(start_date);
@@ -147,9 +147,9 @@ CREATE INDEX idx_events_parent_id ON historical_events(parent_event_id);
 CREATE INDEX idx_events_date_range ON historical_events(start_date, end_date);
 ```
 
-**Composite Index** `(start_date, end_date)` — satisfies queries that filter on both columns without needing two separate index lookups.
+**Composite Index** `(start_date, end_date)` - satisfies queries that filter on both columns without needing two separate index lookups.
 
-**GIN Trigram Index** — for case-insensitive partial text search (`ILIKE '%term%'`):
+**GIN Trigram Index** - for case-insensitive partial text search (`ILIKE '%term%'`):
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS "pg_trgm";
@@ -187,7 +187,7 @@ A historical data file can contain millions of lines. Loading the entire file in
 \text{Memory} = \text{lines} \times \text{avg bytes per line}
 \]
 
-For 10M lines × 200 bytes = **2 GB** — unacceptable.
+For 10M lines × 200 bytes = **2 GB** - unacceptable.
 
 ### 2.2 Stream-Based Solution
 
@@ -199,11 +199,11 @@ File on Disk ──► ReadStream ──► readline interface ──► Process
 ```
 
 **Key APIs:**
-- `fs.createReadStream()` — reads the file in 64KB chunks (configurable).
-- `readline.createInterface()` — splits the byte stream on newline boundaries.
-- `for await (const line of rl)` — async iterator, processes one line at a time.
+- `fs.createReadStream()` - reads the file in 64KB chunks (configurable).
+- `readline.createInterface()` - splits the byte stream on newline boundaries.
+- `for await (const line of rl)` - async iterator, processes one line at a time.
 
-**Memory complexity:** O(1) — only one line + one batch in memory at any time.
+**Memory complexity:** O(1) - only one line + one batch in memory at any time.
 
 ### 2.3 Batch Inserts
 
@@ -243,7 +243,7 @@ EVENT_ID | EVENT_NAME | START_DATE | END_DATE | PARENT_ID_OR_NULL | DESCRIPTION
 6. **Date ordering:** `end_date >= start_date`
 7. **parent_event_id:** Must be `NULL` or a valid UUID
 
-If any validation fails, the line is logged as an error and skipped — **processing continues** for remaining lines.
+If any validation fails, the line is logged as an error and skipped - **processing continues** for remaining lines.
 
 ---
 
@@ -342,8 +342,8 @@ Step 3: Return the root node
 ```
 
 **Complexity:**
-- Time: O(n) — single pass to build map + single pass to wire children
-- Space: O(n) — map of all events
+- Time: O(n) - single pass to build map + single pass to wire children
+- Space: O(n) - map of all events
 
 ### 4.4 Adjacency List vs. Other Tree Storage Models
 
@@ -407,7 +407,7 @@ const allowedSortColumns = ['start_date', 'end_date', 'event_name', 'duration_mi
 const safeSortBy = allowedSortColumns.includes(sortBy) ? sortBy : 'start_date';
 ```
 
-This is a **whitelist approach** — only pre-approved column names can be used in `ORDER BY`.
+This is a **whitelist approach** - only pre-approved column names can be used in `ORDER BY`.
 
 ---
 
@@ -469,8 +469,8 @@ WHERE a.start_date < b.end_date
 **Why `a.event_id < b.event_id`?**
 
 Without this condition, we'd get:
-- (A, B) **and** (B, A) — duplicate pair
-- (A, A) — self-pair (meaningless)
+- (A, B) **and** (B, A) - duplicate pair
+- (A, A) - self-pair (meaningless)
 
 The `<` condition ensures each pair appears exactly once and eliminates self-joins.
 
@@ -488,7 +488,7 @@ Given a time range \([S, E]\) and a set of events within it, find the **largest 
 
 This is a classic **computational geometry** technique adapted for 1D intervals.
 
-**Concept:** Imagine a vertical line sweeping left to right across the timeline. We track the **frontier** — the furthest point in time that is "covered" by any event seen so far.
+**Concept:** Imagine a vertical line sweeping left to right across the timeline. We track the **frontier** - the furthest point in time that is "covered" by any event seen so far.
 
 **Algorithm:**
 
@@ -561,10 +561,10 @@ Where dates are in milliseconds (JavaScript `Date` objects).
 
 | Step | Cost |
 |------|------|
-| Sort by start_date | O(n log n) — done by PostgreSQL via index |
-| Sweep through events | O(n) — single pass |
+| Sort by start_date | O(n log n) - done by PostgreSQL via index |
+| Sweep through events | O(n) - single pass |
 | **Total** | **O(n)** (sorting is done in DB with index) |
-| Space | O(1) — only frontier + current largest gap |
+| Space | O(1) - only frontier + current largest gap |
 
 ---
 

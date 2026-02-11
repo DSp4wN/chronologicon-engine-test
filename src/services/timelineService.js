@@ -51,7 +51,7 @@ async function getTimeline(rootEventId) {
   const rootEvent = subtree.find((e) => e.event_id === rootEventId);
 
   if (rootEvent && rootEvent.parent_event_id) {
-    // This event has a parent — get ancestors too
+    // This event has a parent - get ancestors too
     const ancestors = await eventModel.getAncestors(rootEventId);
 
     // Merge ancestors and subtree (avoid duplicates)

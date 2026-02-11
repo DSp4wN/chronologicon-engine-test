@@ -20,7 +20,7 @@ function validate(schema, source = 'body') {
       });
     }
 
-    // In Express 5, req.query is a read-only getter — use req.validatedQuery instead.
+    // In Express 5, req.query is a read-only getter - use req.validatedQuery instead.
     // For body and params, direct assignment is still safe.
     if (source === 'query') {
       req.validatedQuery = value;

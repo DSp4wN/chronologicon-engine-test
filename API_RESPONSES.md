@@ -1,4 +1,4 @@
-# Chronologicon Engine — API Response Examples
+# Chronologicon Engine - API Response Examples
 
 > All responses captured from a live server running on `http://localhost:3000`
 
@@ -323,7 +323,7 @@ curl "http://localhost:3000/api/events/search?start_date_after=2023-01-05T00:00:
 
 ---
 
-## 6. Insights — Overlapping Events
+## 6. Insights - Overlapping Events
 
 **Request:**
 
@@ -473,7 +473,7 @@ curl "http://localhost:3000/api/insights/overlapping-events?startDate=2023-01-01
 
 ---
 
-## 7. Insights — Temporal Gaps
+## 7. Insights - Temporal Gaps
 
 **Request:**
 
@@ -508,7 +508,7 @@ curl "http://localhost:3000/api/insights/temporal-gaps?startDate=2023-01-01T00:0
 
 ---
 
-## 8. Insights — Event Influence (Shortest Temporal Path)
+## 8. Insights - Event Influence (Shortest Temporal Path)
 
 ### 8a. Path Exists
 

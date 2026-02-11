@@ -1,5 +1,5 @@
 /**
- * Unit tests for timelineService — tree building logic.
+ * Unit tests for timelineService - tree building logic.
  */
 const { buildTree } = require('../../src/services/timelineService');
 
@@ -136,7 +136,7 @@ describe('buildTree', () => {
         end_date: '2023-01-01T11:30:00.000Z',
         duration_minutes: 90,
         parent_event_id: null,
-        metadata: { source: 'test' }, // extra field — should not appear in output
+        metadata: { source: 'test' }, // extra field - should not appear in output
       },
     ];
 

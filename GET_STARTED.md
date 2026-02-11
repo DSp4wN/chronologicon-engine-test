@@ -1,4 +1,4 @@
-# Get Started — Chronologicon Engine
+# Get Started - Chronologicon Engine
 
 A step-by-step guide to set up, run, and test every API endpoint.
 
@@ -96,9 +96,9 @@ Once the server is running, open a **separate terminal** and run through these c
 
 ---
 
-### ① POST /api/events/ingest — Ingest Sample Data
+### ① POST /api/events/ingest - Ingest Sample Data
 
-**Option A — JSON body with server file path:**
+**Option A - JSON body with server file path:**
 
 ```bash
 curl -X POST http://localhost:3000/api/events/ingest \
@@ -106,7 +106,7 @@ curl -X POST http://localhost:3000/api/events/ingest \
   -d '{"filePath": "./data/sample_historical_data.txt"}'
 ```
 
-**Option B — File upload (multipart/form-data):**
+**Option B - File upload (multipart/form-data):**
 
 ```bash
 curl -X POST http://localhost:3000/api/events/ingest \
@@ -123,11 +123,11 @@ curl -X POST http://localhost:3000/api/events/ingest \
 }
 ```
 
-> 📌 **Copy the `jobId`** — you'll need it for the next step.
+> 📌 **Copy the `jobId`** - you'll need it for the next step.
 
 ---
 
-### ② GET /api/events/ingestion-status/:jobId — Check Ingestion Progress
+### ② GET /api/events/ingestion-status/:jobId - Check Ingestion Progress
 
 Replace `<jobId>` with the value from step ①:
 
@@ -157,7 +157,7 @@ curl http://localhost:3000/api/events/ingestion-status/<jobId>
 
 ---
 
-### ③ GET /api/timeline/:rootEventId — Hierarchical Timeline
+### ③ GET /api/timeline/:rootEventId - Hierarchical Timeline
 
 ```bash
 curl http://localhost:3000/api/timeline/a1b2c3d4-e5f6-7890-1234-567890abcdef
@@ -192,7 +192,7 @@ curl http://localhost:3000/api/timeline/a1b2c3d4-e5f6-7890-1234-567890abcdef
 
 ---
 
-### ④ GET /api/events/search — Search Events
+### ④ GET /api/events/search - Search Events
 
 **Search by name (partial, case-insensitive):**
 
@@ -229,9 +229,9 @@ curl "http://localhost:3000/api/events/search?start_date_after=2023-01-05T00:00:
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
-| `name` | string | — | Partial match (case-insensitive) |
-| `start_date_after` | ISO 8601 | — | Events starting after this date |
-| `end_date_before` | ISO 8601 | — | Events ending before this date |
+| `name` | string | - | Partial match (case-insensitive) |
+| `start_date_after` | ISO 8601 | - | Events starting after this date |
+| `end_date_before` | ISO 8601 | - | Events ending before this date |
 | `sortBy` | string | `start_date` | `start_date`, `end_date`, `event_name`, `duration_minutes` |
 | `sortOrder` | string | `asc` | `asc` or `desc` |
 | `page` | number | 1 | Page number |
@@ -239,7 +239,7 @@ curl "http://localhost:3000/api/events/search?start_date_after=2023-01-05T00:00:
 
 ---
 
-### ⑤ GET /api/insights/overlapping-events — Find Overlapping Event Pairs
+### ⑤ GET /api/insights/overlapping-events - Find Overlapping Event Pairs
 
 ```bash
 curl "http://localhost:3000/api/insights/overlapping-events?startDate=2023-01-01T00:00:00Z&endDate=2023-01-05T00:00:00Z"
@@ -271,13 +271,13 @@ curl "http://localhost:3000/api/insights/overlapping-events?startDate=2023-01-01
 
 ---
 
-### ⑥ GET /api/insights/temporal-gaps — Find Largest Temporal Gap
+### ⑥ GET /api/insights/temporal-gaps - Find Largest Temporal Gap
 
 ```bash
 curl "http://localhost:3000/api/insights/temporal-gaps?startDate=2023-01-01T00:00:00Z&endDate=2023-02-10T00:00:00Z"
 ```
 
-**Expected response — Gap found (200 OK):**
+**Expected response - Gap found (200 OK):**
 
 ```json
 {
@@ -302,9 +302,9 @@ curl "http://localhost:3000/api/insights/temporal-gaps?startDate=2023-01-01T00:0
 
 ---
 
-### ⑦ GET /api/insights/event-influence — Shortest Temporal Path (Dijkstra's)
+### ⑦ GET /api/insights/event-influence - Shortest Temporal Path (Dijkstra's)
 
-**Scenario 1 — Path exists:**
+**Scenario 1 - Path exists:**
 
 ```bash
 curl "http://localhost:3000/api/insights/event-influence?sourceEventId=d1e2f3a4-b5c6-7d8e-9f0a-1b2c3d4e5f6a&targetEventId=c6d7e8f9-a0b1-c2d3-e4f5-a6b7c8d9e0f1"
@@ -327,7 +327,7 @@ curl "http://localhost:3000/api/insights/event-influence?sourceEventId=d1e2f3a4-
 }
 ```
 
-**Scenario 2 — No path (different branches):**
+**Scenario 2 - No path (different branches):**
 
 ```bash
 curl "http://localhost:3000/api/insights/event-influence?sourceEventId=9b8a7c6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d&targetEventId=c8d7e6f5-a4b3-2109-8765-4321fedcba98"
@@ -349,7 +349,7 @@ curl "http://localhost:3000/api/insights/event-influence?sourceEventId=9b8a7c6d-
 
 ## 6. Run the Test Suite
 
-Tests use mocked database calls — **no PostgreSQL needed** to run them.
+Tests use mocked database calls - **no PostgreSQL needed** to run them.
 
 ```bash
 # Run all tests
@@ -383,7 +383,7 @@ npm run lint
 
 ---
 
-## Quick Reference — All Endpoints
+## Quick Reference - All Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|

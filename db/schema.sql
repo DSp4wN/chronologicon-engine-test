@@ -1,5 +1,5 @@
 -- ============================================================================
--- Chronologicon Engine — Database Schema (DDL)
+-- Chronologicon Engine - Database Schema (DDL)
 -- PostgreSQL 14+
 -- ============================================================================
 

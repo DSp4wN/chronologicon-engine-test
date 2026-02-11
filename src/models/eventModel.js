@@ -3,7 +3,7 @@ const { db } = require('../config/db');
 const TABLE = 'historical_events';
 
 /**
- * Batch insert events (without duration_minutes — it's a generated column in PG)
+ * Batch insert events (without duration_minutes - it's a generated column in PG)
  */
 async function batchInsert(events) {
   // Remove duration_minutes since it's a GENERATED ALWAYS column

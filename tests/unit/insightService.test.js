@@ -1,5 +1,5 @@
 /**
- * Unit tests for insightService — Temporal Gap Finder and Dijkstra's algorithm.
+ * Unit tests for insightService - Temporal Gap Finder and Dijkstra's algorithm.
  *
  * These tests mock the eventModel to isolate business logic from the database.
  */
